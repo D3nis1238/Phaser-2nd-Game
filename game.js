@@ -1,4 +1,8 @@
 function preload() {
+  this.load.image("fon", "assets/fon.png");
+    this.load.image("platform", "assets/platform.png");
+    this.load.image("star", "assets/star-1.png");
+    this.load.image("skelet", "assets/chaxluknevmuryshiu.png");
   this.load.spritesheet("dude", "assets/pixilart-drawing.png", {
     frameWidth: 20,
     frameHeight: 34,
@@ -28,3 +32,22 @@ function create() {
   });
 
 }
+var camera = document.getElementById("camera")
+var dude = Document.getElementById("dude")
+function updatecamera(){
+var dudePosition =
+dude.getBoundingClientRect();
+var screenWidth = windows.innerWidth
+var screenHight = windows.innerHight
+var CameraX = dudePosition.Left -(screenWidth / 2) +(dudePosition.Width / 2);
+var CameraY = dudePosition.Left -(screenHeight / 2) +(dudePosition.height / 2);
+camera.style.left = cameraX + "px"
+camera.style.top =  CameraY +"px"
+}
+window.onload = function () {
+  updatecamera();
+};
+dude.addEventListener("mousemove", 
+function() {
+  updatecamera();
+});
