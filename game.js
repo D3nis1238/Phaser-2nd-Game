@@ -1,5 +1,25 @@
+var scoreText;
+var gameOver = false;
+var worldwidth = 10000;
+var config = {
+  type: Phaser.AUTO,     width: 800,
+  height: 600, 
+  physics: {
+    default: "arcade",
+    arcade: {
+      gravity: { y: 321 },
+      debug: false,
+    },
+  },
+  scene: {
+    preload: preload,
+    create: create,
+    update: update,
+  },
+};
 function preload() {
-  this.load.image("fon", "assets/fon.png");
+  //this.load.image("fon", "assets/fon.png");
+  this.load.image("fon1", "assets/фон+.jpg");
     this.load.image("platform", "assets/platform.png");
     this.load.image("star", "assets/star-1.png");
     this.load.image("skelet", "assets/chaxluknevmuryshiu.png");
@@ -30,24 +50,16 @@ function create() {
     frameRate: 10,
     repeat: -1,
   });
+this.add.tileSprite(0,0,worldwidth, 1080,"fon1").setOrigin(0,0);
+platforms = this.physics.add.staticgroup();
+for (var x = 0; x < worldwidth; x = x + 100) {
+  console.log(x)
+  plstform.create(x,1000, "ground").setOrigin(0, 0).refreshBody();
+}
+this.camera.main.setBounds(0,0,worldwidth, window.innerHeight);
+this.camera.world.setBounds(0,0,worldwidth, window.innerHeight);
+this.camera.main.startFollow(dude);
+}
+function upgrade(){
 
 }
-var camera = document.getElementById("camera")
-var dude = Document.getElementById("dude")
-function updatecamera(){
-var dudePosition =
-dude.getBoundingClientRect();
-var screenWidth = windows.innerWidth
-var screenHight = windows.innerHight
-var CameraX = dudePosition.Left -(screenWidth / 2) +(dudePosition.Width / 2);
-var CameraY = dudePosition.Left -(screenHeight / 2) +(dudePosition.height / 2);
-camera.style.left = cameraX + "px"
-camera.style.top =  CameraY +"px"
-}
-window.onload = function () {
-  updatecamera();
-};
-dude.addEventListener("mousemove", 
-function() {
-  updatecamera();
-});
