@@ -33,7 +33,6 @@ var tree
 
 function preload() {
   this.load.image("fon", "assets/Новий проєкт.png");
-  // this.load.image("fon1", "assets/фон+.jpg");
   this.load.image("platform", "assets/14.png");
   this.load.image("star", "assets/star-1.png");
   this.load.image("skelet", "assets/chaxluknevmuryshiu.png");
@@ -57,7 +56,7 @@ function create() {
   platforms = this.physics.add.staticGroup();
 
   for (var x = 0; x < worldwidth; x = x + 128) {
-    //console.log(x);
+
     platforms
       .create(x, 1080-80, "platform")
     .setOrigin(0, 0)
@@ -66,9 +65,9 @@ function create() {
   }
   //додаю чела
   player = this.physics.add.sprite(100, 450, "dude")
-  player.setBounce(0.2);
+  player.setBounce(0.2)
   player.setCollideWorldBounds(true)
-  player.setDepth(5)
+  player.setDepth(5);
   //додав колізію
   this.physics.add.collider(player,platforms)
   //роблю челу анімацію
@@ -99,6 +98,38 @@ function create() {
   this.cameras.main.setBounds(0, 0, worldwidth, window.innerHeight);
   this.physics.world.setBounds(0, 0, worldwidth, window.innerHeight);
   this.cameras.main.startFollow(player);
+  //додаю камень
+  stone = this.physics.add.staticGroup();
+  for ( var y = 0; y < worldwidth; y = y + Phaser.Math.FloatBetween(200,500) ) {
+    stone
+      .create(y, 1080-80, "stone")
+    .setOrigin(0, 1)
+    .refreshBody()
+    .setDepth(Phaser.Math.Between(1,10))
+    .setScale(Phaser.Math.FloatBetween(0.5,2));
+  }
+  //додаю дерева
+  tree = this.physics.add.staticGroup();
+  for ( var y = 0; y < worldwidth; y = y + Phaser.Math.FloatBetween(200,500) ) {
+    tree
+      .create(y, 1080-80, "tree")
+    .setOrigin(0, 1)
+    .refreshBody()
+    .setDepth(Phaser.Math.Between(1,10))
+    .setScale(Phaser.Math.FloatBetween(0.5,2));
+  }
+  //додаю кущи
+  bush = this.physics.add.staticGroup();
+  for ( var y = 0; y < worldwidth; y = y + Phaser.Math.FloatBetween(200,500) ) {
+    bush
+      .create(y, 1080-80, "bush")
+    .setOrigin(0, 1)
+    .refreshBody()
+    .setDepth(Phaser.Math.Between(1,10))
+    .setScale(Phaser.Math.FloatBetween(0.5,2));
+  }
+//додаю платформи згори
+
 }
 function update() {
 
