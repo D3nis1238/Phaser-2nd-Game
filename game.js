@@ -32,7 +32,7 @@ var stone
 var tree
 
 function preload() {
-  this.load.image("fon", "assets/igra_tsvetov_raznye_tsveta_linii_51895_1920x1080.jpg");
+  this.load.image("fon", "assets/Новий проєкт.png");
   // this.load.image("fon1", "assets/фон+.jpg");
   this.load.image("platform", "assets/14.png");
   this.load.image("star", "assets/star-1.png");
@@ -64,10 +64,13 @@ function create() {
     .refreshBody();
       
   }
-  //доаю чела
+  //додаю чела
   player = this.physics.add.sprite(100, 450, "dude")
   player.setBounce(0.2);
-  player.setCollideWorldBounds(true);
+  player.setCollideWorldBounds(true)
+  player.setDepth(5)
+  //додав колізію
+  this.physics.add.collider(player,platforms)
   //роблю челу анімацію
   this.anims.create({
     key: "left",
