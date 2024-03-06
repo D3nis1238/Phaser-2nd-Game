@@ -17,16 +17,24 @@ var config = {
 };
 var game = new Phaser.Game(config);
 var platforms;
-var player;
+var dude;
 var score = 0;
 var scoreText;
 var lives = 3;
 var worldwidth = 9600;
+var platform
+var player
+var star
+var skelet
+var fon
+var bush
+var stone
+var tree
 
 function preload() {
   this.load.image("fon", "assets/igra_tsvetov_raznye_tsveta_linii_51895_1920x1080.jpg");
   // this.load.image("fon1", "assets/фон+.jpg");
-  this.load.image("platform", "assets/platform.png");
+  this.load.image("platform", "assets/14.png");
   this.load.image("star", "assets/star-1.png");
   this.load.image("skelet", "assets/chaxluknevmuryshiu.png");
   this.load.image("tree", "assets/Tree_2.png");
@@ -39,24 +47,28 @@ function preload() {
 }
 
 function create() {
-  //
-  this.add.tileSprite(0, 0, worldwidth, 1080, "fon").setOrigin(0, 0);
+  //додаю фон
+  this.add.tileSprite(0, 0, worldwidth, 1080, "fon")
+  .setOrigin(0, 0)
+  .setDepth(0)
+  .setScale(1);
 
-
-  //
+  //Додаю платформи
   platforms = this.physics.add.staticGroup();
 
-  for (var x = 0; x < worldwidth; x = x + 1120) {
-    console.log(x);
-    platforms.create(x, 776, "platform").setOrigin(0, 0).refreshBody();
+  for (var x = 0; x < worldwidth; x = x + 128) {
+    //console.log(x);
+    platforms
+      .create(x, 1080-80, "platform")
+    .setOrigin(0, 0)
+    .refreshBody();
+      
   }
-
-
-  //
+  //доаю чела
   player = this.physics.add.sprite(100, 450, "dude")
   player.setBounce(0.2);
   player.setCollideWorldBounds(true);
-  //
+  //роблю челу анімацію
   this.anims.create({
     key: "left",
     frames: this.anims.generateFrameNumbers("dude", { start: 0, end: 3 }),
@@ -75,7 +87,7 @@ function create() {
     frameRate: 10,
     repeat: -1,
   });
-  //
+  //прикрепляю камеру
   cursors = this.input.keyboard.createCursorKeys();
 
 
