@@ -182,6 +182,12 @@ for (i = 1; 1 < Phaser.Math.FloatBetween(0,5); i++) {
 }
 
 this.physics.add.collider(player,platform)
+//кнопка ресета
+var resetButton = this.add.text(400, 450, 'reset').setInteractive();
+resetButton.on('pointerdown', function () {      
+        refreshBody();       
+    });
+
 }
 
 
