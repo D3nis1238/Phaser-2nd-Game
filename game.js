@@ -30,11 +30,11 @@ var fon
 var bush
 var stone
 var tree
-
+var text
 function preload() {
   this.load.image("fon", "assets/Новий проєкт.png");
   this.load.image("platform", "assets/14.png");
-  this.load.image("star", "assets/star-1.png");
+  this.load.image("star", "assets/Mushroom_2.png");
   this.load.image("skelet", "assets/chaxluknevmuryshiu.png");
   this.load.image("tree", "assets/Tree_2.png");
   this.load.image("stone", "assets/Stone.png");
@@ -91,16 +91,12 @@ function create() {
   });
   //прикрепляю камеру
   cursors = this.input.keyboard.createCursorKeys();
-
-
-
-
   this.cameras.main.setBounds(0, 0, worldwidth, window.innerHeight);
   this.physics.world.setBounds(0, 0, worldwidth, window.innerHeight);
   this.cameras.main.startFollow(player);
   //додаю камень
   stone = this.physics.add.staticGroup();
-  for ( var y = 0; y < worldwidth; y = y + Phaser.Math.FloatBetween(200,500) ) {
+  for ( var y = 0; y < worldwidth; y = y + Phaser.Math.FloatBetween(700,1000) ) {
     stone
       .create(y, 1080-80, "stone")
     .setOrigin(0, 1)
@@ -110,7 +106,7 @@ function create() {
   }
   //додаю дерева
   tree = this.physics.add.staticGroup();
-  for ( var y = 0; y < worldwidth; y = y + Phaser.Math.FloatBetween(200,500) ) {
+  for ( var y = 0; y < worldwidth; y = y + Phaser.Math.FloatBetween(700,1000) ) {
     tree
       .create(y, 1080-80, "tree")
     .setOrigin(0, 1)
@@ -120,7 +116,7 @@ function create() {
   }
   //додаю кущи
   bush = this.physics.add.staticGroup();
-  for ( var y = 0; y < worldwidth; y = y + Phaser.Math.FloatBetween(200,500) ) {
+  for ( var y = 0; y < worldwidth; y = y + Phaser.Math.FloatBetween(700,1000) ) {
     bush
       .create(y, 1080-80, "bush")
     .setOrigin(0, 1)
@@ -128,8 +124,40 @@ function create() {
     .setDepth(Phaser.Math.Between(1,10))
     .setScale(Phaser.Math.FloatBetween(0.5,2));
   }
-//додаю платформи згори
+//додаю платформи зірки
+cursors = this.input.keyboard.createCursorKeys();
+stars = this.physics.add.group({
+  key: "star",
+  repeat: 10,
+  setXY: { x: Phaser.Math.FloatBetween(700,1000), y: 0, stepX: Phaser.Math.FloatBetween(900,1500) },
+});
 
+stars.children.iterate(function (child) {
+  child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+});
+this.physics.add.collider(stars, platforms);
+this.physics.add.overlap(player, stars, collectStar, null, this);
+function collectStar(player, star) {
+  star.disableBody(true, true);
+}
+scoreText = this.add.text(16, 16, "score: 0 / 80", {fontSize: "32px",fill: "#000"}
+)
+.setScrollFactor(0);
+function collectStar(player, star) {
+  star.disableBody(true, true);
+
+  score += 10;
+  scoreText.setText("Score:" + score + " / 80" );
+}
+livesText = this.add.text(1700, 16, "lives = 3", {fontSize: "32px",fill: "#000"}
+)
+.setScrollFactor(0);
+function collectSkelet(player, skelet) {
+  skelet.disableBody(true, true);
+
+  lives += 1;
+  livesTextText.setText("lives: " - lives);
+}
 }
 function update() {
 
