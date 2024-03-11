@@ -31,6 +31,7 @@ var bush
 var stone
 var tree
 var text
+var z
 function preload() {
   this.load.image("fon", "assets/Новий проєкт.png");
   this.load.image("platform", "assets/14.png");
@@ -39,6 +40,9 @@ function preload() {
   this.load.image("tree", "assets/Tree_2.png");
   this.load.image("stone", "assets/Stone.png");
   this.load.image("bush", "assets/Bush (1).png");
+  this.load.image("1plt", "assets/13.png");
+  this.load.image("2plt", "assets/15.png");
+  this.load.image("3plt", "assets/14.png");
   this.load.spritesheet("dude", "assets/pixilart-drawing.png", {
     frameWidth: 20,
     frameHeight: 34,
@@ -124,7 +128,7 @@ function create() {
     .setDepth(Phaser.Math.Between(1,10))
     .setScale(Phaser.Math.FloatBetween(0.5,2));
   }
-//додаю платформи зірки
+//додаю зірки
 cursors = this.input.keyboard.createCursorKeys();
 stars = this.physics.add.group({
   key: "star",
@@ -140,6 +144,7 @@ this.physics.add.overlap(player, stars, collectStar, null, this);
 function collectStar(player, star) {
   star.disableBody(true, true);
 }
+//додаю рахунок
 scoreText = this.add.text(16, 16, "score: 0 / 80", {fontSize: "32px",fill: "#000"}
 )
 .setScrollFactor(0);
@@ -149,6 +154,7 @@ function collectStar(player, star) {
   score += 10;
   scoreText.setText("Score:" + score + " / 80" );
 }
+//життя
 livesText = this.add.text(1700, 16, "lives = 3", {fontSize: "32px",fill: "#000"}
 )
 .setScrollFactor(0);
@@ -158,6 +164,24 @@ function collectSkelet(player, skelet) {
   lives += 1;
   livesTextText.setText("lives: " - lives);
 }
+//додаю платформи згори
+  for (var x = 0; x < worldwidth; x = x + Phaser.Math.FloatBetween(1000,2000)) {
+  var y = Phaser.Math.FloatBetween(128,128* 6 );
+    platforms
+      .create(x, y, "1plt")
+    .setOrigin(0.5, 0.5);
+    var i;
+for (i = 1; 1 < Phaser.Math.FloatBetween(0,5); i++) {
+  platform
+  .create(x + 128 * i, y, "3plt") 
+  .setOrigin(0.5,0.5);
+  }
+  platform
+  .create(x + 128*i + 128, y, "2plt") 
+  .setOrigin(0.5,0.5);
+}
+cursors = this.imput.keyboard.createCursorKeys();
+this.physics.add.collider(player,platform)
 }
 function update() {
 
