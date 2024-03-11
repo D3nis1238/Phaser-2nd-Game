@@ -5,7 +5,7 @@ var config = {
   physics: {
     default: "arcade",
     arcade: {
-      gravity: { y: 321 },
+      gravity: { y: 200 },
       debug: true,
     },
   },
@@ -172,17 +172,20 @@ function collectSkelet(player, skelet) {
     .setOrigin(0.5, 0.5);
     var i;
 for (i = 1; 1 < Phaser.Math.FloatBetween(0,5); i++) {
-  platform
-  .create(x + 128 * i, y, "3plt") 
+  platforms
+  .create( x +128*i, y, "3plt") 
   .setOrigin(0.5,0.5);
   }
-  platform
+  platforms
   .create(x + 128*i + 128, y, "2plt") 
   .setOrigin(0.5,0.5);
 }
-cursors = this.imput.keyboard.createCursorKeys();
+
 this.physics.add.collider(player,platform)
 }
+
+
+
 function update() {
 
   if (cursors.left.isDown) {
