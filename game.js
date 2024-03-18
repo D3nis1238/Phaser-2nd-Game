@@ -5,7 +5,7 @@ var config = {
   physics: {
     default: "arcade",
     arcade: {
-      gravity: { y: 200 },
+      gravity: { y: 100 },
       debug: true,
     },
   },
@@ -36,7 +36,7 @@ function preload() {
   this.load.image("fon", "assets/Новий проєкт.png");
   this.load.image("platform", "assets/14.png");
   this.load.image("star", "assets/Mushroom_2.png");
-  this.load.image("skelet", "assets/chaxluknevmuryshiu.png");
+  this.load.image("skelet", "assets/Новий проєкт (2).png");
   this.load.image("tree", "assets/Tree_2.png");
   this.load.image("stone", "assets/Stone.png");
   this.load.image("bush", "assets/Bush (1).png");
@@ -154,6 +154,23 @@ function collectStar(player, star) {
   score += 10;
   scoreText.setText("Score:" + score + " / 80" );
 }
+// додаю ворогів
+cursors = this.input.keyboard.createCursorKeys();
+skelets = this.physics.add.group({
+  key: "skelet",
+  repeat: 3,
+  setXY: { x: Phaser.Math.FloatBetween(700,1500), y: 0, stepX: Phaser.Math.FloatBetween(900,1500) }
+  
+});
+
+skelets.children.iterate(function (child) {
+  child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+});
+this.physics.add.collider(skelets, platforms);
+this.physics.add.overlap(player, skelets, collectSkelet, null, this);
+function collectSkelet(player, skelet) {
+  skelet.disableBody(true, true);
+}
 //життя
 livesText = this.add.text(1700, 16, "lives = 3", {fontSize: "32px",fill: "#000"}
 )
@@ -161,8 +178,8 @@ livesText = this.add.text(1700, 16, "lives = 3", {fontSize: "32px",fill: "#000"}
 function collectSkelet(player, skelet) {
   skelet.disableBody(true, true);
 
-  lives += 1;
-  livesTextText.setText("lives: " - lives);
+  lives += -1;
+  livesText.setText("lives: " + lives);
 }
 //додаю платформи згори
   for (var x = 0; x < worldwidth; x = x + Phaser.Math.FloatBetween(1000,2000)) {
