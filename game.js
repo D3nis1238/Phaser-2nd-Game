@@ -180,6 +180,13 @@ function collectSkelet(player, skelet) {
 
   lives += -1;
   livesText.setText("lives: " + lives);
+  if (lives <=0) {
+    livesText.setStyle({fill: '#ff0000'});
+    gameover = true;
+    this.physics.pause();
+    player.setTint(0xff0000);
+    player.anims.play('turn');
+  }
 }
 //додаю платформи згори
   for (var x = 0; x < worldwidth; x = x + Phaser.Math.FloatBetween(1000,2000)) {
