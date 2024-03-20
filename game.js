@@ -31,7 +31,7 @@ var bush
 var stone
 var tree
 var text
-var z
+
 function preload() {
   this.load.image("fon", "assets/Новий проєкт.png");
   this.load.image("platform", "assets/14.png");
@@ -50,11 +50,12 @@ function preload() {
 }
 
 function create() {
+
   //додаю фон
   this.add.tileSprite(0, 0, worldwidth, 1080, "fon")
-  .setOrigin(0, 0)
-  .setDepth(0)
-  .setScale(1);
+    .setOrigin(0, 0)
+    .setDepth(0)
+    .setScale(1);
 
   //Додаю платформи
   platforms = this.physics.add.staticGroup();
@@ -62,10 +63,10 @@ function create() {
   for (var x = 0; x < worldwidth; x = x + 128) {
 
     platforms
-      .create(x, 1080-80, "platform")
-    .setOrigin(0, 0)
-    .refreshBody();
-      
+      .create(x, 1080 - 80, "platform")
+      .setOrigin(0, 0)
+      .refreshBody();
+
   }
   //додаю чела
   player = this.physics.add.sprite(100, 450, "dude")
@@ -73,7 +74,7 @@ function create() {
   player.setCollideWorldBounds(true)
   player.setDepth(5);
   //додав колізію
-  this.physics.add.collider(player,platforms)
+  this.physics.add.collider(player, platforms)
   //роблю челу анімацію
   this.anims.create({
     key: "left",
@@ -100,117 +101,123 @@ function create() {
   this.cameras.main.startFollow(player);
   //додаю камень
   stone = this.physics.add.staticGroup();
-  for ( var y = 0; y < worldwidth; y = y + Phaser.Math.FloatBetween(700,1000) ) {
+  for (var y = 0; y < worldwidth; y = y + Phaser.Math.FloatBetween(700, 1000)) {
     stone
-      .create(y, 1080-80, "stone")
-    .setOrigin(0, 1)
-    .refreshBody()
-    .setDepth(Phaser.Math.Between(1,10))
-    .setScale(Phaser.Math.FloatBetween(0.5,2));
+      .create(y, 1080 - 80, "stone")
+      .setOrigin(0, 1)
+      .refreshBody()
+      .setDepth(Phaser.Math.Between(1, 10))
+      .setScale(Phaser.Math.FloatBetween(0.5, 2));
   }
   //додаю дерева
   tree = this.physics.add.staticGroup();
-  for ( var y = 0; y < worldwidth; y = y + Phaser.Math.FloatBetween(700,1000) ) {
+  for (var y = 0; y < worldwidth; y = y + Phaser.Math.FloatBetween(700, 1000)) {
     tree
-      .create(y, 1080-80, "tree")
-    .setOrigin(0, 1)
-    .refreshBody()
-    .setDepth(Phaser.Math.Between(1,10))
-    .setScale(Phaser.Math.FloatBetween(0.5,2));
+      .create(y, 1080 - 80, "tree")
+      .setOrigin(0, 1)
+      .refreshBody()
+      .setDepth(Phaser.Math.Between(1, 10))
+      .setScale(Phaser.Math.FloatBetween(0.5, 2));
   }
   //додаю кущи
   bush = this.physics.add.staticGroup();
-  for ( var y = 0; y < worldwidth; y = y + Phaser.Math.FloatBetween(700,1000) ) {
+  for (var y = 0; y < worldwidth; y = y + Phaser.Math.FloatBetween(700, 1000)) {
     bush
-      .create(y, 1080-80, "bush")
-    .setOrigin(0, 1)
-    .refreshBody()
-    .setDepth(Phaser.Math.Between(1,10))
-    .setScale(Phaser.Math.FloatBetween(0.5,2));
+      .create(y, 1080 - 80, "bush")
+      .setOrigin(0, 1)
+      .refreshBody()
+      .setDepth(Phaser.Math.Between(1, 10))
+      .setScale(Phaser.Math.FloatBetween(0.5, 2));
   }
-//додаю зірки
-cursors = this.input.keyboard.createCursorKeys();
-stars = this.physics.add.group({
-  key: "star",
-  repeat: 10,
-  setXY: { x: Phaser.Math.FloatBetween(700,1000), y: 0, stepX: Phaser.Math.FloatBetween(900,1500) },
-});
+  //додаю зірки
+  cursors = this.input.keyboard.createCursorKeys();
+  stars = this.physics.add.group({
+    key: "star",
+    repeat: 10,
+    setXY: { x: Phaser.Math.FloatBetween(700, 1000), y: 0, stepX: Phaser.Math.FloatBetween(900, 1500) },
+  });
 
-stars.children.iterate(function (child) {
-  child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-});
-this.physics.add.collider(stars, platforms);
-this.physics.add.overlap(player, stars, collectStar, null, this);
-function collectStar(player, star) {
-  star.disableBody(true, true);
-}
-//додаю рахунок
-scoreText = this.add.text(16, 16, "score: 0 / 80", {fontSize: "32px",fill: "#000"}
-)
-.setScrollFactor(0);
-function collectStar(player, star) {
-  star.disableBody(true, true);
-
-  score += 10;
-  scoreText.setText("Score:" + score + " / 80" );
-}
-// додаю ворогів
-cursors = this.input.keyboard.createCursorKeys();
-skelets = this.physics.add.group({
-  key: "skelet",
-  repeat: 3,
-  setXY: { x: Phaser.Math.FloatBetween(700,1500), y: 0, stepX: Phaser.Math.FloatBetween(900,1500) }
-  
-});
-
-skelets.children.iterate(function (child) {
-  child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-});
-this.physics.add.collider(skelets, platforms);
-this.physics.add.overlap(player, skelets, collectSkelet, null, this);
-function collectSkelet(player, skelet) {
-  skelet.disableBody(true, true);
-}
-//життя
-livesText = this.add.text(1700, 16, "lives = 3", {fontSize: "32px",fill: "#000"}
-)
-.setScrollFactor(0);
-function collectSkelet(player, skelet) {
-  skelet.disableBody(true, true);
-
-  lives += -1;
-  livesText.setText("lives: " + lives);
-  if (lives <=0) {
-    livesText.setStyle({fill: '#ff0000'});
-    gameover = true;
-    this.physics.pause();
-    player.setTint(0xff0000);
-    player.anims.play('turn');
+  stars.children.iterate(function (child) {
+    child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+  });
+  this.physics.add.collider(stars, platforms);
+  this.physics.add.overlap(player, stars, collectStar, null, this);
+  function collectStar(player, star) {
+    star.disableBody(true, true);
   }
-}
-//додаю платформи згори
-  for (var x = 0; x < worldwidth; x = x + Phaser.Math.FloatBetween(1000,2000)) {
-  var y = Phaser.Math.FloatBetween(128,128* 6 );
+  //додаю рахунок
+  scoreText = this.add.text(16, 16, "score: 0 / 80", { fontSize: "32px", fill: "#000" }
+  )
+    .setScrollFactor(0);
+  function collectStar(player, star) {
+    star.disableBody(true, true);
+
+    score += 10;
+    scoreText.setText("Score:" + score + " / 80");
+  }
+  // додаю ворогів
+  cursors = this.input.keyboard.createCursorKeys();
+  skelets = this.physics.add.group({
+    key: "skelet",
+    repeat: 5,
+    setXY: { x: Phaser.Math.FloatBetween(700, 1500), y: 0, stepX: Phaser.Math.FloatBetween(900, 1500) }
+
+  });
+
+  skelets.children.iterate(function (child) {
+    child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+  });
+  this.physics.add.collider(skelets, platforms);
+  this.physics.add.overlap(player, skelets, collectSkelet, null, this);
+  function collectSkelet(player, skelet) {
+    skelet.disableBody(true, true);
+  }
+
+
+  //життя
+  livesText = this.add.text(1700, 16, "lives = 3", { fontSize: "32px", fill: "#000" }
+  )
+    .setScrollFactor(0);
+  function collectSkelet(player, skelet) {
+    skelet.disableBody(true, true);
+
+    lives += -1;
+    livesText.setText("lives: " + lives);
+    if (lives <= 0) {
+      livesText.setStyle({ fill: '#ff0000' });
+      gameover = true;
+      this.physics.pause();
+      player.setTint(0xff0000);
+      player.anims.play('turn');
+    }
+  }
+  //додаю платформи згори
+  for (var x = 0; x < worldwidth; x = x + Phaser.Math.FloatBetween(1000, 2000)) {
+    var y = Phaser.Math.FloatBetween(128, 128 * 6);
     platforms
       .create(x, y, "1plt")
-    .setOrigin(0.5, 0.5);
+      .setOrigin(0.5, 0.5);
     var i;
-for (i = 1; 1 < Phaser.Math.FloatBetween(0,5); i++) {
-  platforms
-  .create( x +128*i, y, "3plt") 
-  .setOrigin(0.5,0.5);
+    for (i = 1; 1 < Phaser.Math.FloatBetween(0, 5); i++) {
+      platforms
+        .create(x + 128 * i, y, "3plt")
+        .setOrigin(0.5, 0.5);
+    }
+    platforms
+      .create(x + 128 * i + 128, y, "2plt")
+      .setOrigin(0.5, 0.5);
   }
-  platforms
-  .create(x + 128*i + 128, y, "2plt") 
-  .setOrigin(0.5,0.5);
-}
 
-this.physics.add.collider(player,platform)
-//кнопка ресета
-var resetButton = this.add.text(400, 450, 'reset').setInteractive();
-resetButton.on('pointerdown', function () {      
-        refreshBody();       
-    });
+  this.physics.add.collider(player, platform)
+  //кнопка ресета
+  //var resetButton = this.add.text(400, 450, 'reset',{fontSize: '40px', fill : '#ccc'})
+  //.setInteractive()
+  //.setScrollFactor(0)
+  //.on('pointerdown', function (){
+
+  //}
+  //)
+  //рух ворога
 
 }
 
@@ -236,5 +243,17 @@ function update() {
   if (cursors.up.isDown && player.body.touching.down) {
     player.setVelocityY(-330);
   }
-
+  //рух ворога
+  if (Math.abs(player.x - skelets.x) < 600) {
+    skelets.moveTo(player, player.x, player.y, 300, 1)
+  }
+  if (lives == 0) {
+    refreshBody();
+  }
+  //зміна напрямку ворога
+  skelets.children.iterate((child) => {
+    if (Math.random() < 0.1) {
+      child.setVelocityX(Phaser.Math.FloatBetween(-500, 500))
+    }
+  })
 }
