@@ -5,7 +5,7 @@ var config = {
   physics: {
     default: "arcade",
     arcade: {
-      gravity: { y: 100 },
+      gravity: { y: 1488 },
       debug: true,
     },
   },
@@ -43,6 +43,7 @@ function preload() {
   this.load.image("1plt", "assets/13.png");
   this.load.image("2plt", "assets/15.png");
   this.load.image("3plt", "assets/14.png");
+  this.load.image("heart", "assets/pngwing.com.png");
   this.load.spritesheet("dude", "assets/pixilart-drawing.png", {
     frameWidth: 20,
     frameHeight: 34,
@@ -65,7 +66,7 @@ function create() {
     platforms
       .create(x, 1080 - 80, "platform")
       .setOrigin(0, 0)
-      .refreshBody();
+    .refreshBody();
 
   }
   //додаю чела
@@ -105,7 +106,7 @@ function create() {
     stone
       .create(y, 1080 - 80, "stone")
       .setOrigin(0, 1)
-      .refreshBody()
+      //.refreshBody()
       .setDepth(Phaser.Math.Between(1, 10))
       .setScale(Phaser.Math.FloatBetween(0.5, 2));
   }
@@ -115,7 +116,7 @@ function create() {
     tree
       .create(y, 1080 - 80, "tree")
       .setOrigin(0, 1)
-      .refreshBody()
+      //.refreshBody()
       .setDepth(Phaser.Math.Between(1, 10))
       .setScale(Phaser.Math.FloatBetween(0.5, 2));
   }
@@ -125,7 +126,7 @@ function create() {
     bush
       .create(y, 1080 - 80, "bush")
       .setOrigin(0, 1)
-      .refreshBody()
+      //.refreshBody()
       .setDepth(Phaser.Math.Between(1, 10))
       .setScale(Phaser.Math.FloatBetween(0.5, 2));
   }
@@ -175,7 +176,7 @@ function create() {
 
 
   //життя
-  livesText = this.add.text(1700, 16, "lives = 3", { fontSize: "32px", fill: "#000" }
+  livesText = this.add.text(1700, 16, "lives: " + lives, { fontSize: "32px", fill: "#000" }
   )
     .setScrollFactor(0);
   function collectSkelet(player, skelet) {
@@ -183,13 +184,13 @@ function create() {
 
     lives += -1;
     livesText.setText("lives: " + lives);
-    if (lives <= 0) {
-      livesText.setStyle({ fill: '#ff0000' });
-      gameover = true;
-      this.physics.pause();
-      player.setTint(0xff0000);
-      player.anims.play('turn');
-    }
+    // if (lives <= 0) {
+    // livesText.setStyle({ fill: '#ff0000' });
+    // gameover = true;
+    // this.physics.pause();
+    //  player.setTint(0xff0000);
+    // player.anims.play('turn');
+    // }
   }
   //додаю платформи згори
   for (var x = 0; x < worldwidth; x = x + Phaser.Math.FloatBetween(1000, 2000)) {
@@ -218,7 +219,21 @@ function create() {
   //}
   //)
   //рух ворога
+//додадю heart
+cursors = this.input.keyboard.createCursorKeys();
+  skelets = this.physics.add.group({
+    key: "heart",
+    repeat: 5,
+    setXY: { x: Phaser.Math.FloatBetween(700, 1500), y: 0, stepX: Phaser.Math.FloatBetween(900, 1500) }
 
+  });
+  setScrollFactor(0);
+  function collectheart(player, heart) {
+    heart.disableBody(true, true);
+
+    lives2 += +1;
+    livesText.setText("lives: " + lives2);
+  }
 }
 
 
@@ -226,12 +241,12 @@ function create() {
 function update() {
 
   if (cursors.left.isDown) {
-    player.setVelocityX(-160);
+    player.setVelocityX(-1600);
 
     player.anims.play("left", true);
   }
   else if (cursors.right.isDown) {
-    player.setVelocityX(160);
+    player.setVelocityX(1600);
 
     player.anims.play("right", true);
   }
@@ -241,19 +256,24 @@ function update() {
     player.anims.play("turn");
   }
   if (cursors.up.isDown && player.body.touching.down) {
-    player.setVelocityY(-330);
+    player.setVelocityY(-1488);
   }
   //рух ворога
   if (Math.abs(player.x - skelets.x) < 600) {
     skelets.moveTo(player, player.x, player.y, 300, 1)
   }
   if (lives == 0) {
-    refreshBody();
+    console.log('game over')
+    restartGame();
   }
   //зміна напрямку ворога
   skelets.children.iterate((child) => {
-    if (Math.random() < 0.1) {
+    if (Math.random() < 0.05) {
       child.setVelocityX(Phaser.Math.FloatBetween(-500, 500))
     }
   })
+
+  function restartGame() {
+    location.reload();
+  }
 }
