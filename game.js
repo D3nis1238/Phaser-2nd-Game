@@ -183,6 +183,9 @@ function create() {
     skelet.disableBody(true, true);
 
     lives += -1;
+    heart.disableBody(true, true);
+
+    lives += +1;
     livesText.setText("lives: " + lives);
     // if (lives <= 0) {
     // livesText.setStyle({ fill: '#ff0000' });
@@ -220,20 +223,35 @@ function create() {
   //)
   //рух ворога
 //додадю heart
-cursors = this.input.keyboard.createCursorKeys();
-  skelets = this.physics.add.group({
-    key: "heart",
-    repeat: 5,
-    setXY: { x: Phaser.Math.FloatBetween(700, 1500), y: 0, stepX: Phaser.Math.FloatBetween(900, 1500) }
 
-  });
-  setScrollFactor(0);
-  function collectheart(player, heart) {
-    heart.disableBody(true, true);
 
-    lives2 += +1;
-    livesText.setText("lives: " + lives2);
+heart = this.physics.add.staticGroup();
+  for (var y = 0; y < worldwidth; y = y + Phaser.Math.FloatBetween(700, 1000)) {
+    heart
+      .create(y, 1080 - 80, "heart")
+      .setOrigin(0, 1)
+      .refreshBody()
+      .setDepth(Phaser.Math.Between(1, 10))
+      .setScale(0.08);
   }
+
+
+
+
+// cursors = this.input.keyboard.createCursorKeys();
+//   heart = this.physics.add.group({
+//     key: "heart",
+//     repeat: 5,
+//     setXY: { x: Phaser.Math.FloatBetween(700, 1500), y: 0, stepX: Phaser.Math.FloatBetween(900, 1500) }
+
+//   })
+//   .setScrollFactor(0);
+//   function collectheart(player, heart) {
+//     heart.disableBody(true, true);
+
+//     lives2 += +1;
+//     livesText.setText("lives: " + lives2);
+//   }
 }
 
 
