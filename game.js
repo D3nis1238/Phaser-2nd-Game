@@ -183,9 +183,6 @@ function create() {
     skelet.disableBody(true, true);
 
     lives += -1;
-    heart.disableBody(true, true);
-
-    lives += +1;
     livesText.setText("lives: " + lives);
     // if (lives <= 0) {
     // livesText.setStyle({ fill: '#ff0000' });
@@ -225,15 +222,15 @@ function create() {
 //додадю heart
 
 
-heart = this.physics.add.staticGroup();
-  for (var y = 0; y < worldwidth; y = y + Phaser.Math.FloatBetween(700, 1000)) {
-    heart
-      .create(y, 1080 - 80, "heart")
-      .setOrigin(0, 1)
-      .refreshBody()
-      .setDepth(Phaser.Math.Between(1, 10))
-      .setScale(0.08);
-  }
+// heart = this.physics.add.staticGroup();
+//   for (var y = 0; y < worldwidth; y = y + Phaser.Math.FloatBetween(700, 1000)) {
+//     heart
+//       .create(y, 1080 - 80, "heart")
+//       .setOrigin(0, 1)
+//       .refreshBody()
+//       .setDepth(Phaser.Math.Between(1, 10))
+//       .setScale(0.08);
+//   }
 
 
 
